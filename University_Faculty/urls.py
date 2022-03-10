@@ -2,9 +2,6 @@
  ctrl + k, ctrl + enter -> commit
  ctrl + shift + k, ctrl + enter -> push
 """
-
-
-
 from django.contrib import admin
 from django.urls import path
 
