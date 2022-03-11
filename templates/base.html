@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'style/cite.css' %}">
+    <title>University Faculty Project</title>
+</head>
+<body>
+<nav class="navbar">
+    <div class="university-name"><i class="fa-solid fa-building-columns"></i> University Name</div>
+    <a href="#" class="toggle-btn">
+        <i class="fa-solid fa-bars fa-3x"></i>
+    </a>
+
+    <div class="navbar-links">
+        <ul>
+            <li>
+                <a href="#"><i class="fa-solid fa-scroll"></i> Exams</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-newspaper"></i> News</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-house"></i> Home</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-fw fa-chalkboard-teacher"></i> Teacher</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-fw fa-user-graduate"></i> Student</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-fw fa-sign-in-alt"></i> Log in</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-user-plus"></i> Register</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Admin</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="main">
+    <h1>this is main</h1>
+    <h2>here we put our views</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores beatae deserunt ducimus enim est ipsa ipsam ratione temporibus velit. Ad animi aperiam asperiores at blanditiis error explicabo minima modi nesciunt.</p>
+</div>
+<footer class="footer">
+    <div class="inner-footer">
+        <div class="logo-container">
+            <i class="fa-solid fa-building-columns fa-2x"></i>
+        </div>
+
+        <div class="footer-third">
+            <h1>Need help?</h1>
+            <a href="#">Privacy Policy</a>
+        </div>
+
+        <div class="footer-third">
+             <h1>Need help?</h1>
+            <a href="#">Privacy Policy</a>
+        </div>
+
+        <div class="footer-third">
+            <h1>Links</h1>
+            <li><a href=""><i class="fa-brands fa-github"></i></a></li>
+            <li><a href=""><i class="fa-brands fa-linkedin"></i></a></li>
+        </div>
+    </div>
+</footer>
+<script src="https://kit.fontawesome.com/8edd30da60.js" crossorigin="anonymous"></script>
+<script src="{% static 'script/nav.js' %}"></script>
+</body>
+</html>

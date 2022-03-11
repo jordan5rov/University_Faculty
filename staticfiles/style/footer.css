@@ -1,0 +1,82 @@
+.footer {
+    height: 100%;
+    width: 100vw;
+    display: block;
+    overflow: hidden;
+    padding: 70px 0;
+    box-sizing: border-box;
+    background-color: #333;
+    margin-top: 434px;
+}
+
+.inner-footer {
+    display: block;
+    margin: 0 auto;
+    width: 1100px;
+    height: 100%;
+}
+
+.inner-footer .logo-container {
+    color: white;
+    width: 35%;
+    float: left;
+    height: 100%;
+    display: block;
+}
+
+.inner-footer .footer-third {
+    width: calc(21.6666666667% - 20px);
+    margin-right: 10px;
+    float: left;
+}
+
+.inner-footer .footer-third:last-child {
+    margin-right: 0;
+}
+
+.inner-footer .footer-third h1 {
+    font-size: 22px;
+    color: white;
+    display: block;
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.inner-footer .footer-third a {
+    font-size: 28px;
+    color: white;
+    display: block;
+    font-weight: 200;
+    width: 100px;
+    padding-bottom: 5px;
+}
+
+.inner-footer .footer-third li {
+    display: inline-block;
+
+}
+
+.inner-footer .footer-third li {
+    display: inline-block;
+
+}
+
+.inner-footer .footer-third a:hover {
+    color: cadetblue;
+}
+
+.inner-footer .footer-third li i:hover {
+    color: cadetblue;
+}
+
+@media (max-width: 760px) {
+    .footer .inner-footer {
+        width: 90%;
+    }
+
+    .inner-footer .logo-container,
+    .inner-footer .footer-third {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+}
