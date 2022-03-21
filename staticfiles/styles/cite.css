@@ -1,0 +1,13 @@
+@import "nav.css";
+@import "background_styles.css";
+@import "home.css";
+@import "footer.css";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}

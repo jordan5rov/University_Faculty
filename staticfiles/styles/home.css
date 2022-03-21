@@ -1,0 +1,70 @@
+.news-container{
+    /*display: flex;*/
+    /*align-items: stretch;*/
+}
+.events-container{
+}
+.show_when_small{
+    display:none;
+}
+.heading{
+    font-size: 2rem;
+    padding: 1rem;
+}
+.heading a{
+    float: right;
+}
+
+.card {
+    margin: 1%;
+    background: white;
+    padding: 1rem;
+    border: none;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
+    border-radius: .25rem;
+}
+
+.card-body > img{
+    display: block;
+    width: 100%;
+    /*aspect-ratio: 16 / 9;*/
+    object-fit: cover;
+    object-position: center;
+
+}
+
+.card-header {
+    font-size: 1.5rem;
+    margin-bottom: .5rem;
+}
+
+.button {
+    --color: hsl(200, 50%, 50%);
+    background: var(--color);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    padding: .5em .75em;
+    border-radius: .25em;
+    cursor: pointer;
+
+}
+
+.button:hover, .button:focus {
+    background: hsl(200, 50%, 60%);
+}
+
+.button.sign-up{
+    background: none;
+    border: 2px solid var(--color);
+    color: var(--color);
+}
+.button.sign-up:hover, .button.sign-up:focus{
+    background: hsl(200, 50%, 90%);
+}
+.button + .button {
+    margin-left: .25rem;
+
+}
+/*MEDIA QUERIES*/
+/*--- TABLETS*/
