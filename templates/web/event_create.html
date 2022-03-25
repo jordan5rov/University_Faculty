@@ -1,0 +1,7 @@
+{% extends 'base.html'%}
+{% block page_content %}
+    <form action="post">
+        {{ form }}
+        {% csrf_token %}
+    </form>
+{% endblock %}
