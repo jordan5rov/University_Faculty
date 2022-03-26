@@ -2,30 +2,34 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as views
 
+from University_Faculty.web.forms import CreateNewsForm
 from University_Faculty.web.models import News, Event
 
 
 class HomeView(views.ListView):
     model = News
     template_name = 'web/home.html'
-    context_object_name = 'news'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        news = list(News.objects.all())
+        start_index = len(news) - 4
+        last_four_news = news[start_index: len(news)]
+        last_four_news.reverse()
+        context['news'] = last_four_news
         context['events'] = Event.objects.all()
         return context
 
 
 class NewsCreate(views.CreateView):
     model = News
-    template_name = 'web/create_news.html'
-    fields = ('title', 'image', 'description')
+    template_name = 'web/news_create.html'
     success_url = reverse_lazy('home')
-    # news = News.objects.all()
+    form_class = CreateNewsForm
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     return super().form_valid(form)
 
 
 class NewsDetails(views.DetailView):
@@ -40,6 +44,13 @@ class NewsEdit(views.UpdateView):
 
 class NewsDelete(views.DeleteView):
     template_name = 'web/news_delete.html'
+
+
+class NewsSeeMore(views.ListView):
+    template_name = 'web/news_see_more.html'
+    model = News
+    paginate_by = 10
+    context_object_name = 'news'
 
 
 class EventDetails(views.DetailView):

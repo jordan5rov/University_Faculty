@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="navbar">
-    <div class="brand-title">Brand Name</div>
+    <div class="brand-title">University Faculty</div>
     <a href="#" class="toggle-button">
         <span class="bar"></span>
         <span class="bar"></span>
@@ -18,13 +18,13 @@
     </a>
     <div class="navbar-links">
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'create news' %}">Add news</a></li>
+            <li><a href="#">Add event</a></li>
         </ul>
     </div>
 </nav>
-<div class="container mt-5">
+<div class="container my-5">
     {% block page_content %}
     {% endblock %}
 </div>
