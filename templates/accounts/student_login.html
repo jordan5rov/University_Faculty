@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <h1>Student Login</h1>
+    <form method="post" action="{% url 'login' %}" enctype="multipart/form-data" class="cite-form">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.errors }}
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-success">Post</button>
+    </form>
+{% endblock %}
