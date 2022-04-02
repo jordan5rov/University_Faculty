@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 
-from University_Faculty.accounts.models import Student, Teacher
+from University_Faculty.accounts.models import Profile
 from University_Faculty.common.helpers import BootstrapFormMixin
 
 UserModel = get_user_model()
@@ -10,15 +10,14 @@ UserModel = get_user_model()
 class CreateStudentForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.user = user
         self._init_bootstrap_form_controls()
 
     first_name = forms.CharField(
-        max_length=Student.FIRST_NAME_MAX_LENGTH
+        max_length=Profile.FIRST_NAME_MAX_LENGTH
     )
 
     last_name = forms.CharField(
-        max_length=Student.LAST_NAME_MAX_LENGTH
+        max_length=Profile.LAST_NAME_MAX_LENGTH
     )
 
     email = forms.EmailField()
@@ -28,19 +27,21 @@ class CreateStudentForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     date_of_birth = forms.DateTimeField()
 
     gender = forms.ChoiceField(
-        choices=Student.GENDERS
+        choices=Profile.GENDERS
     )
 
     def save(self, commit=True):
         user = super().save(commit=commit)
+        user.is_student = True
+        user.save()
 
-        student_profile = Student(
+        student_profile = Profile(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
             profile_picture=self.cleaned_data['profile_picture'],
             date_of_birth=self.cleaned_data['date_of_birth'],
             gender=self.cleaned_data['gender'],
-            user=user
+            user=user,
         )
 
         if commit:
@@ -65,31 +66,35 @@ class CreateStudentForm(BootstrapFormMixin, auth_forms.UserCreationForm):
 
 
 class CreateTeacherForm(BootstrapFormMixin, auth_forms.UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
     first_name = forms.CharField(
-        max_length=Teacher.FIRST_NAME_MAX_LENGTH
+        max_length=Profile.FIRST_NAME_MAX_LENGTH
     )
 
     last_name = forms.CharField(
-        max_length=Teacher.LAST_NAME_MAX_LENGTH
+        max_length=Profile.LAST_NAME_MAX_LENGTH
     )
 
     email = forms.EmailField()
 
-    profile_picture = forms.URLField()
+    profile_picture = forms.FileField()
 
     date_of_birth = forms.DateTimeField()
 
     gender = forms.ChoiceField(
-        choices=Teacher.GENDERS
+        choices=Profile.GENDERS
     )
 
     def save(self, commit=True):
         user = super().save(commit=commit)
-
-        student_profile = Teacher(
+        user.is_teacher = True
+        user.save()
+        teacher_profile = Profile(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
-            email=self.cleaned_data['email'],
             profile_picture=self.cleaned_data['profile_picture'],
             date_of_birth=self.cleaned_data['date_of_birth'],
             gender=self.cleaned_data['gender'],
@@ -97,7 +102,7 @@ class CreateTeacherForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         )
 
         if commit:
-            student_profile.save()
+            teacher_profile.save()
 
         return user
 
@@ -115,13 +120,3 @@ class CreateTeacherForm(BootstrapFormMixin, auth_forms.UserCreationForm):
                 'placeholder': 'Enter your image url',
             }),
         }
-
-
-class DeleteStudentForm(forms.ModelForm):
-    def save(self, commit=True):
-        self.instance.delete()
-        return self.instance
-
-    class Meta:
-        model = Student
-        fields = ()

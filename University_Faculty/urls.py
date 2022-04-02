@@ -11,7 +11,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('University_Faculty.web.urls')),
-    path('', include('University_Faculty.accounts.urls')),
+    path('accounts/', include('University_Faculty.accounts.urls')),
     path('', include('University_Faculty.exam.urls')),
 ]
 if settings.DEBUG:

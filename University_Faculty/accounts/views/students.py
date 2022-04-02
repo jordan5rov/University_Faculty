@@ -4,13 +4,19 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 
 from University_Faculty.accounts.forms import CreateStudentForm
+from University_Faculty.accounts.models import UniversityUser
 from University_Faculty.common.view_mixins import RedirectToHome
 
 
 class StudentRegisterView(RedirectToHome, views.CreateView):
+    model = UniversityUser
     form_class = CreateStudentForm
     template_name = 'accounts/student_register.html'
     success_url = reverse_lazy('home')
+
+    def get_context_fata(self, **kwargs):
+        kwargs['user_type'] = 'student'
+        return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         result = super().form_valid(form)
@@ -18,7 +24,7 @@ class StudentRegisterView(RedirectToHome, views.CreateView):
         return result
 
 
-class UserLoginView(auth_views.LoginView):
+class StudentLoginView(auth_views.LoginView):
     template_name = 'accounts/student_login.html'
     success_url = reverse_lazy('home')
 
@@ -26,7 +32,3 @@ class UserLoginView(auth_views.LoginView):
         if self.success_url:
             return self.success_url
         return super().get_success_url()
-
-
-class UserLogoutView(auth_views.LogoutView):
-    next_page = reverse_lazy('home')
