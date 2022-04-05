@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
+from django.db import transaction
 
 from University_Faculty.accounts.models import Profile
 from University_Faculty.common.helpers import BootstrapFormMixin
@@ -30,6 +31,7 @@ class CreateStudentForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         choices=Profile.GENDERS
     )
 
+    @transaction.atomic
     def save(self, commit=True):
         user = super().save(commit=commit)
         user.is_student = True
@@ -88,6 +90,7 @@ class CreateTeacherForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         choices=Profile.GENDERS
     )
 
+    @transaction.atomic
     def save(self, commit=True):
         user = super().save(commit=commit)
         user.is_teacher = True

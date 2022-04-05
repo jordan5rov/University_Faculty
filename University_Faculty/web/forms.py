@@ -34,3 +34,17 @@ class CreateNewsForm(BootstrapFormMixin, forms.ModelForm):
                 }
             )
         }
+
+
+class DeleteNewsForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    def save(self, commit=True):
+        self.instance.delete()
+        return self.instance
+
+    class Meta:
+        model = News
+        fields = ()

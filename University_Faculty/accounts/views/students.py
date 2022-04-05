@@ -24,11 +24,4 @@ class StudentRegisterView(RedirectToHome, views.CreateView):
         return result
 
 
-class StudentLoginView(auth_views.LoginView):
-    template_name = 'accounts/student_login.html'
-    success_url = reverse_lazy('home')
 
-    def get_success_url(self):
-        if self.success_url:
-            return self.success_url
-        return super().get_success_url()

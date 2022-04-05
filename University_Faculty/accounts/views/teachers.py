@@ -21,3 +21,4 @@ class TeacherRegisterView(RedirectToHome, views.CreateView):
         result = super().form_valid(form)
         login(self.request, self.object)
         return result
+
