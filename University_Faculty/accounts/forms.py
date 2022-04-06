@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 from django.db import transaction
 
-from University_Faculty.accounts.models import Profile
+from University_Faculty.accounts.models import Student, Teacher
 from University_Faculty.common.helpers import BootstrapFormMixin
 
 UserModel = get_user_model()
@@ -14,11 +14,11 @@ class CreateStudentForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         self._init_bootstrap_form_controls()
 
     first_name = forms.CharField(
-        max_length=Profile.FIRST_NAME_MAX_LENGTH
+        max_length=Student.FIRST_NAME_MAX_LENGTH
     )
 
     last_name = forms.CharField(
-        max_length=Profile.LAST_NAME_MAX_LENGTH
+        max_length=Student.LAST_NAME_MAX_LENGTH
     )
 
     email = forms.EmailField()
@@ -28,7 +28,7 @@ class CreateStudentForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     date_of_birth = forms.DateTimeField()
 
     gender = forms.ChoiceField(
-        choices=Profile.GENDERS
+        choices=Student.GENDERS
     )
 
     @transaction.atomic
@@ -37,7 +37,7 @@ class CreateStudentForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         user.is_student = True
         user.save()
 
-        student_profile = Profile(
+        student_profile = Student(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
             profile_picture=self.cleaned_data['profile_picture'],
@@ -73,11 +73,11 @@ class CreateTeacherForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         self._init_bootstrap_form_controls()
 
     first_name = forms.CharField(
-        max_length=Profile.FIRST_NAME_MAX_LENGTH
+        max_length=Student.FIRST_NAME_MAX_LENGTH
     )
 
     last_name = forms.CharField(
-        max_length=Profile.LAST_NAME_MAX_LENGTH
+        max_length=Student.LAST_NAME_MAX_LENGTH
     )
 
     email = forms.EmailField()
@@ -87,7 +87,7 @@ class CreateTeacherForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     date_of_birth = forms.DateTimeField()
 
     gender = forms.ChoiceField(
-        choices=Profile.GENDERS
+        choices=Student.GENDERS
     )
 
     @transaction.atomic
@@ -95,7 +95,7 @@ class CreateTeacherForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         user = super().save(commit=commit)
         user.is_teacher = True
         user.save()
-        teacher_profile = Profile(
+        teacher_profile = Teacher(
             first_name=self.cleaned_data['first_name'],
             last_name=self.cleaned_data['last_name'],
             profile_picture=self.cleaned_data['profile_picture'],
@@ -123,3 +123,4 @@ class CreateTeacherForm(BootstrapFormMixin, auth_forms.UserCreationForm):
                 'placeholder': 'Enter your image url',
             }),
         }
+

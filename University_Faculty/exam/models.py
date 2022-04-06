@@ -2,8 +2,9 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.html import escape, mark_safe
 
-
-UserModel = get_user_model()
+#
+# UserModel = get_user_model()
+from University_Faculty import accounts
 
 
 class Subject(models.Model):
@@ -53,7 +54,7 @@ class Question(models.Model):
 
 
 class Result(models.Model):
-    student = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    student = models.ForeignKey("accounts.Student", on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     score = models.PositiveIntegerField()
     date = models.DateTimeField(auto_now=True)

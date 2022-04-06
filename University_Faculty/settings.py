@@ -19,7 +19,9 @@ DJANGO_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
-THIRD_PARTY_APPS = ()
+THIRD_PARTY_APPS = (
+    'crispy_forms',
+)
 
 UNIVERSITY_FACULTY_APPS = (
     'University_Faculty.web',
