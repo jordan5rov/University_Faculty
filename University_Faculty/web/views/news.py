@@ -11,9 +11,9 @@ class NewsCreate(views.CreateView):
     success_url = reverse_lazy('home')
     form_class = CreateNewsForm
 
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class NewsDetailsView(views.DetailView):

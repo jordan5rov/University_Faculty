@@ -25,8 +25,7 @@ THIRD_PARTY_APPS = (
 
 UNIVERSITY_FACULTY_APPS = (
     'University_Faculty.web',
-    'University_Faculty.accounts',
-    'University_Faculty.exam',
+    'University_Faculty.classroom',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + UNIVERSITY_FACULTY_APPS
@@ -117,4 +116,4 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'accounts.UniversityUser'
+AUTH_USER_MODEL = 'classroom.UniversityUser'

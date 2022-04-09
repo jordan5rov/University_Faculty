@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block page_content %}
-    {% include 'accounts/student_header.html' with active='new' %}
+    {% include 'classroom/student_header.html' with active='new' %}
     <div class="card">
         <table class="table mb-0">
             <thead>
             <tr>
-                <th>Quiz</th>
+                <th>Exam</th>
                 <th>Subject</th>
                 <th>Length</th>
                 <th></th>
@@ -17,14 +17,14 @@
                 <tr>
                     <td class="align-middle">{{ exam.name }}</td>
                     <td class="align-middle">{{ exam.subject.get_html_badge }}</td>
-                    <td class="align-middle">{{ exam.questions_count }} questions</td>
+                    <td class="align-middle"> questions</td>
                     <td class="text-right">
                         <a href="" class="btn btn-primary">Start quiz</a>
                     </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td class="bg-light text-center font-italic" colspan="4">No quiz matching your interests right
+                    <td class="bg-light text-center font-italic" colspan="4">No exam matching your interests right
                         now.
                     </td>
                 </tr>

@@ -11,8 +11,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin', admin.site.urls),
     path('', include('University_Faculty.web.urls')),
-    path('accounts/', include('University_Faculty.accounts.urls')),
-    path('exam/', include('University_Faculty.exam.urls')),
+    path('', include('University_Faculty.classroom.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
