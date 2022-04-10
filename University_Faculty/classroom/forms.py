@@ -2,8 +2,9 @@ from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
 from django.db import transaction
 
-from University_Faculty.classroom.models import Subject, Student
+from University_Faculty.classroom.models import Subject, Student, Teacher
 from University_Faculty.common.helpers import BootstrapFormMixin
+from University_Faculty.common.constants import STUDENT, TEACHER
 
 
 class StudentCreateForm(BootstrapFormMixin, auth_forms.UserCreationForm):
@@ -18,13 +19,16 @@ class StudentCreateForm(BootstrapFormMixin, auth_forms.UserCreationForm):
         required=True
     )
 
-    @transaction.atomic
-    def save(self):
+    def save(self, commit=True):
         user = super().save(commit=False)
-        user.is_student = True
-        user.save()
+        user.type = STUDENT
+
+        if commit:
+            user.save()
+
         student = Student.objects.create(user=user)
         student.interests.add(*self.cleaned_data.get('interests'))
+
         return user
 
     class Meta:
@@ -36,14 +40,69 @@ class TeacherCreateForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+        self.fields['specialization'].widget.attrs['class'] = 'checkbox-inline'
+
+    specialization = forms.ModelMultipleChoiceField(
+        queryset=Subject.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=True
+    )
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.is_teacher = True
+        user.type = TEACHER
         if commit:
             user.save()
+
+        teacher = Teacher.objects.create(user=user)
+        teacher.specialization.add(*self.cleaned_data.get('specialization'))
+
         return user
 
     class Meta:
         model = get_user_model()
         fields = ('username', 'password1', 'password2')
+
+
+class StudentEditForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Student
+        fields = ('interests',)
+
+
+class TeacherEditForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Teacher
+        fields = ('specialization',)
+
+
+class StudentDeleteForm(forms.ModelForm):
+    def save(self, commit=True):
+        interests = self.instance.subjects_set.all()
+        interests.delete()
+        self.instance.delete()
+        return self.instance
+
+    class Meta:
+        model = Student
+        fields = ()
+
+
+class TeacherDeleteForm(forms.ModelForm):
+    def save(self, commit=True):
+        specializations = self.instance.subjects_set.all()
+        specializations.delete()
+        self.instance.delete()
+        return self.instance
+
+    class Meta:
+        model = Teacher
+        fields = ()

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+    {% include 'classroom/student_header.html' with active='new' %}
+    <div class="card">
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th>Quiz</th>
+                <th>Subject</th>
+                <th>Length</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for quiz in quizzes %}
+                <tr>
+                    <td class="align-middle">{{ quiz.name }}</td>
+                    <td class="align-middle">{{ quiz.subject.get_html_badge }}</td>
+                    <td class="align-middle"> questions</td>
+                    <td class="text-right">
+                        {% if request.user.type == 'Student' %}
+                            <a href="" class="btn btn-primary">Start quiz</a>
+                        {% elif request.user.type == 'Teacher' %}
+
+                            <a href="{% url 'update quiz' quiz.id %}" class="btn btn-warning">Edit quiz</a>
+
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td class="bg-light text-center font-italic" colspan="4">No exam matching your interests right
+                        now.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+{% endblock %}

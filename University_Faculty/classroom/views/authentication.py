@@ -1,7 +1,8 @@
-from django.contrib.auth import login, get_user_model
-from django.shortcuts import redirect
+from django.contrib.auth import get_user_model
+
 from django.urls import reverse_lazy
 from django.views import generic as views
+from django.contrib.auth import views as auth_views
 
 from University_Faculty.classroom.forms import StudentCreateForm, TeacherCreateForm
 from University_Faculty.classroom.models import Student
@@ -22,12 +23,6 @@ class StudentRegisterView(views.CreateView):
         kwargs['user_type'] = 'student'
         return super().get_context_data(**kwargs)
 
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-
-        return user
-
 
 class TeacherRegisterView(views.CreateView):
     template_name = 'classroom/register_form.html'
@@ -40,8 +35,16 @@ class TeacherRegisterView(views.CreateView):
         kwargs['user_type'] = 'teacher'
         return super().get_context_data(**kwargs)
 
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
 
-        return user
+class LoginView(auth_views.LoginView):
+    template_name = 'classroom/login.html'
+    success_url = reverse_lazy('home')
+
+    def get_success_url(self):
+        if self.request.user:
+            return self.success_url
+        return super().get_success_url()
+
+
+class LogoutView(auth_views.LogoutView):
+    next_page = 'home'
