@@ -32,7 +32,7 @@
                 <div class="list-group-item">
                     <div class="row">
                         <div class="col-10">
-                            <a href="">{{ question.text }}</a>
+                            <a href="{% url 'update question' quiz.pk question.pk %}">{{ question.question }}</a>
                         </div>
                         <div class="col-2">
                             {{ question.answers_count }}
@@ -47,7 +47,7 @@
             {% endfor %}
         </div>
         <div class="card-footer">
-            <a href="" class="btn btn-primary btn-sm">Add question</a>
+            <a href="{% url 'create question' quiz.pk %}" class="btn btn-primary btn-sm">Add question</a>
         </div>
     </div>
 {% endblock %}

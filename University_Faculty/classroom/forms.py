@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
+from django.core.exceptions import ValidationError
 from django.db import transaction
 
-from University_Faculty.classroom.models import Subject, Student, Teacher
+from University_Faculty.classroom.models import Subject, Student, Teacher, Question
 from University_Faculty.common.helpers import BootstrapFormMixin
 from University_Faculty.common.constants import STUDENT, TEACHER
 
@@ -106,3 +107,27 @@ class TeacherDeleteForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = ()
+
+
+class QuestionForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Question
+        fields = ('question', 'option_1', 'option_2', 'option_3', 'option_4', 'correct_option')
+
+
+class BaseAnswerInlineFormSet(forms.BaseInlineFormSet):
+    def clean(self):
+        super().clean()
+
+        has_one_correct_answer = False
+        for form in self.forms:
+            if not form.cleaned_data.get('DELETE', False):
+                if form.cleaned_data.get('is_correct', False):
+                    has_one_correct_answer = True
+                    break
+        if not has_one_correct_answer:
+            raise ValidationError('Mark at least one answer as correct.', code='no_correct_answer')
