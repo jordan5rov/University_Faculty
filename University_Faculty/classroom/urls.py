@@ -5,6 +5,7 @@ from University_Faculty.classroom.views.authentication import RegisterView, Stud
 from University_Faculty.classroom.views.questions import create_question_view, edit_question_view, QuestionDeleteView
 from University_Faculty.classroom.views.quizzes import QuizListView, QuizCreateView, QuizUpdateView, QuizDeleteView, \
     QuizResultsView
+from University_Faculty.classroom.views.students import StudentInterestView, take_quiz_view, quiz_data_view
 
 urlpatterns = (
     path('register', RegisterView.as_view(), name='register'),
@@ -22,4 +23,8 @@ urlpatterns = (
     path('quiz/<int:pk>/question/create/', create_question_view, name='create question'),
     path('quiz/<int:quiz_pk>/question/<int:question_pk>/update/', edit_question_view, name='update question'),
     path('quiz/<int:quiz_pk>/question/<int:question_pk>/delete/', QuestionDeleteView.as_view(), name='delete question'),
+
+    path('student/interests/', StudentInterestView.as_view(), name='interests student'),
+    path('student/quiz/<int:pk>/', take_quiz_view, name='take quiz'),
+    path('student/quiz/<int:pk>/data/', quiz_data_view, name='data quiz'),
 )

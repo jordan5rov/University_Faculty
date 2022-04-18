@@ -4,11 +4,11 @@
 {% load crispy_forms_tags %}
 
 {% block page_content %}
-  <h2 class="mb-3">Update your interests</h2>
-  <form method="post" novalidate>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Save changes</button>
-    <a href="{% url 'students exam' %}" class="btn btn-outline-secondary">Nevermind</a>
-  </form>
+    <h2 class="mb-3">Update your interests</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Save changes</button>
+        <a href="{% url 'quizzes' %}" class="btn btn-outline-secondary">Nevermind</a>
+    </form>
 {% endblock %}

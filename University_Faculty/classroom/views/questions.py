@@ -6,8 +6,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from University_Faculty.classroom.forms import QuestionForm, BaseAnswerInlineFormSet
-from University_Faculty.classroom.models import Quiz, Question, StudentAnswer
+from University_Faculty.classroom.forms import QuestionForm
+from University_Faculty.classroom.models import Quiz, Question
 
 
 def create_question_view(request, pk):

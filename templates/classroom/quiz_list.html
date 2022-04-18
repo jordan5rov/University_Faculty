@@ -20,7 +20,9 @@
                     <td class="align-middle"> questions</td>
                     <td class="text-right">
                         {% if request.user.type == 'Student' %}
-                            <a href="" class="btn btn-primary">Start quiz</a>
+
+                            <a href="{% url 'take quiz' quiz.pk %}" class="btn btn-primary">Start quiz</a>
+
                         {% elif request.user.type == 'Teacher' %}
 
                             <a href="{% url 'update quiz' quiz.id %}" class="btn btn-warning">Edit quiz</a>
