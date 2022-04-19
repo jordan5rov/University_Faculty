@@ -1,3 +1,5 @@
+import random
+
 from django.contrib.auth import models as auth_models
 from django.contrib.auth.decorators import login_required
 from django.db import models
@@ -35,7 +37,9 @@ class Quiz(models.Model):
     required_score_to_pass = models.IntegerField(default=0, help_text='Required score to pass the quiz')
 
     def get_questions(self):
-        return self.questions.all()
+        questions = list(self.questions.all())
+        random.shuffle(questions)
+        return questions
 
     def __str__(self):
         return self.name
