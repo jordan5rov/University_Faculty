@@ -15,5 +15,12 @@ OPTION_1 = 'A'
 OPTION_2 = 'B'
 OPTION_3 = 'C'
 OPTION_4 = 'D'
+OPTIONS_MAPPER = {
+    0: OPTION_1,
+    1: OPTION_2,
+    2: OPTION_3,
+    3: OPTION_4,
+    4: '',
+}
 
 TEXT_MAX_LENGTH = 30

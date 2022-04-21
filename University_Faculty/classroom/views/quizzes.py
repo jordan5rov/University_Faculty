@@ -18,9 +18,11 @@ class QuizListView(views.ListView):
         return queryset
 
 
+# Note dont show quizzes with no added questions
+# Note make a form
 class QuizCreateView(views.CreateView):
     model = Quiz
-    fields = ('name', 'subject',)
+    fields = ('name', 'subject', 'time', 'required_score_to_pass', 'max_score')
     template_name = 'classroom/quiz_create.html'
 
     def form_valid(self, form):

@@ -1,12 +1,10 @@
 import random
 
 from django.contrib.auth import models as auth_models
-from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.utils.html import escape, mark_safe
 from University_Faculty.common.constants import *
 from University_Faculty.classroom.managers import UniversityUserManager
-from University_Faculty.common.decorators import student_required
 
 
 class UniversityUser(auth_models.AbstractUser, auth_models.PermissionsMixin):
@@ -35,6 +33,8 @@ class Quiz(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='quizzes')
     time = models.IntegerField(help_text='Duration time in minutes')
     required_score_to_pass = models.IntegerField(default=0, help_text='Required score to pass the quiz')
+    max_score = models.IntegerField(default=100, help_text='Maximum score for the quiz')
+
 
     def get_questions(self):
         questions = list(self.questions.all())
@@ -47,8 +47,7 @@ class Quiz(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(UniversityUser, on_delete=models.CASCADE, primary_key=True)
-    quizzes = models.ManyToManyField(Quiz, through='Result')
-    interests = models.ManyToManyField(Subject, related_name='interested_students')
+    interests = models.ManyToManyField(Subject)
 
     def __str__(self):
         return self.user.username
@@ -56,8 +55,7 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(UniversityUser, on_delete=models.CASCADE, primary_key=True)
-    quizzes = models.ManyToManyField(Quiz, related_name='created_quizzes')
-    specialization = models.ManyToManyField(Subject, related_name='teachers_specialization')
+    specialization = models.ManyToManyField(Subject)
 
     def __str__(self):
         return self.user.username
@@ -71,27 +69,15 @@ class Question(models.Model):
     option_2 = models.CharField(max_length=OPTIONS_MAX_LENGTH)
     option_3 = models.CharField(max_length=OPTIONS_MAX_LENGTH)
     option_4 = models.CharField(max_length=OPTIONS_MAX_LENGTH)
-    correct_option = models.CharField(max_length=max(len(x) for x, _ in OPTIONS), choices=OPTIONS)
 
-    #     def get_answers(self):
-
-    # return self.answer_set.all()
+    correct_option = models.CharField(max_length=1, choices=OPTIONS)
 
     def __str__(self):
         return self.question
 
 
-# class Answer(models.Model):
-#     text = models.CharField(max_length=TEXT_MAX_LENGTH)
-#     correct = models.BooleanField(default=False)
-#     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return f"question: {self.question.question} - answer: {self.text}, correct {self.correct}"
-
-
 class Result(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='taken_quizzes')
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='taken_quizzes')
+    student = models.ForeignKey(UniversityUser, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     score = models.FloatField()
     date = models.DateTimeField(auto_now_add=True)
