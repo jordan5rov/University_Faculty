@@ -1,49 +1,53 @@
 {% extends 'base.html' %}
 {% block page_content %}
     <div class="title">
-        <h1 class="heading">News <a href="{% url 'see more news' %}">See more</a></h1>
+        <h1 class="heading">News <a href="{% url 'see more news' %}">See more</a>
+{#            {% if request.user.type == 'Teacher' %}#}
+{#                <a style="margin-right: 1%" href="{% url 'create news' %}">Create News</a>#}
+{#            {% endif %}#}
+        </h1>
     </div>
     <div class="row">
-                {% for current_news in news %}
-                    <div class="col-sm-12 col-md-5 col-lg col-xl card">
-                    <div class="card-header">{{ current_news.title }}</div>
-                    <div class="card-body">
-                        <img src="{{ current_news.image.url }}" alt="" >
-                    </div>
-                    <div class="card-footer">
-                        <button class="button">Read</button>
-                    </div>
-                </div>
-                {% endfor %}
-
-        </div>
-        <div class="title">
-            <h1 class="heading">Events <a href="">See more</a></h1>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-5 col-lg card">
-                <div class="card-header">We go back to university!</div>
+        {% for current_news in news %}
+            <div class="col-sm-12 col-md-5 col-lg col-xl card">
+                <div class="card-header">{{ current_news.title }}</div>
                 <div class="card-body">
-                    <img src="https://images.unsplash.com/photo-1638913974071-ad0045d13691?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
-                         alt="">
-
+                    <img src="{{ current_news.image.url }}" alt="">
                 </div>
                 <div class="card-footer">
                     <button class="button">Read</button>
-                    <button class="button sign-up">Sign Up</button>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-5 col-lg card">
-                <div class="card-header">We go back to university!</div>
-                <div class="card-body">
-                    <img src="https://images.unsplash.com/photo-1638913974071-ad0045d13691?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
-                         alt="">
+        {% endfor %}
 
-                </div>
-                <div class="card-footer">
-                    <button class="button">Read</button>
-                    <button class="button sign-up">Sign Up</button>
-                </div>
+    </div>
+    <div class="title">
+        <h1 class="heading">Events <a href="">See more</a></h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-5 col-lg card">
+            <div class="card-header">We go back to university!</div>
+            <div class="card-body">
+                <img src="https://images.unsplash.com/photo-1638913974071-ad0045d13691?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
+                     alt="">
+
+            </div>
+            <div class="card-footer">
+                <button class="button">Read</button>
+                <button class="button sign-up">Sign Up</button>
             </div>
         </div>
+        <div class="col-sm-12 col-md-5 col-lg card">
+            <div class="card-header">We go back to university!</div>
+            <div class="card-body">
+                <img src="https://images.unsplash.com/photo-1638913974071-ad0045d13691?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80"
+                     alt="">
+
+            </div>
+            <div class="card-footer">
+                <button class="button">Read</button>
+                <button class="button sign-up">Sign Up</button>
+            </div>
+        </div>
+    </div>
 {% endblock %}

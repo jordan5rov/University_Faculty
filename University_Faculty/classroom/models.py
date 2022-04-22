@@ -34,7 +34,7 @@ class Quiz(models.Model):
     time = models.IntegerField(help_text='Duration time in minutes')
     required_score_to_pass = models.IntegerField(default=0, help_text='Required score to pass the quiz')
     max_score = models.IntegerField(default=100, help_text='Maximum score for the quiz')
-
+    is_taken = models.BooleanField(default=False, help_text='Whether the quiz is taken or not')
 
     def get_questions(self):
         questions = list(self.questions.all())

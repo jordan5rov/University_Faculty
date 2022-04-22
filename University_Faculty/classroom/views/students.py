@@ -77,7 +77,15 @@ def quiz_save_view(request, pk):
                 results.append({str(q): 'not answered'})
 
         score = score * multiplier
-        Result.objects.create(student=student, quiz=quiz, score=score)
+
+        try:
+            result = Result.objects.get(student=student, quiz=quiz)
+            if result.score < score:
+                result.score = score
+                result.save()
+        except Result.DoesNotExist:
+            Result.objects.create(student=student, quiz=quiz, score=score)
+
         passed = False
 
         if score >= quiz.required_score_to_pass:
@@ -93,6 +101,12 @@ def quiz_save_view(request, pk):
 
 
 class QuizTakenListView(views.ListView):
-    model = Quiz
+    model = Result
     template_name = 'classroom/student_quiz_taken.html'
-    context_object_name = 'taken_quiz'
+
+    # get only users quizzes from the database
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['taken_quizzes'] = Result.objects.filter(student=self.request.user)
+        return context
+

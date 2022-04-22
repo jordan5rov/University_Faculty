@@ -3,15 +3,24 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic as views
 
-from University_Faculty.classroom.models import Quiz
+from University_Faculty.classroom.models import Quiz, Result
 
+# TODO add quiz list view for teachers, result view, events functionality
 
 class QuizListView(views.ListView):
     model = Quiz
-    ordering = ('name',)
-    context_object_name = 'quizzes'
+    ordering = ('date',)
     template_name = 'classroom/quiz_list.html'
     paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # get quizzes that are not in results
+        res = Result.objects.filter(student=self.request.user).values_list('quiz', flat=True)
+        context['quizzes'] = Quiz.objects.exclude(id__in=res)
+
+        return context
 
     def get_queryset(self):
         queryset = Quiz.objects.all()
