@@ -10,6 +10,7 @@ $.ajax({
     url: `${url}data/`,
     success: function (response) {
         const data = response.data;
+        const data_pk = response.data_pk;
         data.forEach(el => {
             for (let [question, options] of Object.entries(el)) {
                 let questionMark = '';
@@ -23,8 +24,8 @@ $.ajax({
                 options.forEach(option => {
                     quizBox.innerHTML +=
                         `<div class="form-check">
-                            <input class="opt" type="radio" name="${question}" id="${option}" value="${option}">
-                            <label for="${option}">
+                            <input class="opt" type="radio" name="${question}" id="${data_pk[question]}" value="${option}">
+                            <label for="${data_pk[question]}">
                                 ${option}
                             </label>
                         </div>`;
@@ -46,12 +47,13 @@ const sendData = () => {
     data['csrfmiddlewaretoken'] = csrfToken[0].value;
     elements.forEach(el => {
         if (el.checked)
-            data[el.name] = el.value;
+            data[el.id] = el.value;
         else {
-            if (!data[el.name])
-                data[el.name] = null;
+            if (!data[el.id])
+                data[el.id] = null;
         }
     });
+
     $.ajax({
         type: 'POST',
         url: `${url}save/`,
@@ -59,13 +61,13 @@ const sendData = () => {
         success: function (response) {
             const results = response.results;
             const score = response.score;
+            const max_score = response.max_score;
             if (response.passed === true){
                 scoreBoxText.innerHTML += `<h4>You passed the quiz!</h4>`;
             }
             else {
                 scoreBoxText.innerHTML += `<h4>You failed the quiz!</h4>`;
             }
-            console.log(score);
             quizForm.classList.add('d-none');
             results.forEach(res => {
                 let resDiv = document.createElement('div');
@@ -78,9 +80,8 @@ const sendData = () => {
                         resDiv.classList.add('bg-danger');
                     } else {
                         const answer = response['correct_option'];
-                        console.log(response);
                         const selected = response['selected'];
-                        console.log(answer === selected);
+
                         if (answer === selected) {
                             resDiv.classList.add('bg-success');
                             resDiv.innerHTML += ` - Correct answer: ${answer}`;
@@ -93,7 +94,7 @@ const sendData = () => {
                 const mainDiv = document.getElementById('main-div');
                 mainDiv.appendChild(resDiv);
             })
-            scoreBoxText.innerHTML += `<h4>Your score is ${score}</h4>`;
+            scoreBoxText.innerHTML += `<h4>Your score is ${score}/${max_score}</h4>`;
         },
         error: function (error) {
             console.log(error);

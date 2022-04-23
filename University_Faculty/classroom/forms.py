@@ -3,7 +3,7 @@ from django.contrib.auth import forms as auth_forms, get_user_model
 from django.core.exceptions import ValidationError
 from django.db import transaction
 
-from University_Faculty.classroom.models import Subject, Student, Teacher, Question
+from University_Faculty.classroom.models import Subject, Student, Teacher, Question, Quiz
 from University_Faculty.common.helpers import BootstrapFormMixin
 from University_Faculty.common.constants import STUDENT, TEACHER
 
@@ -84,14 +84,14 @@ class StudentInterestForm(forms.ModelForm):
         }
 
 
-class TeacherEditForm(BootstrapFormMixin, forms.ModelForm):
+class TeacherEditQuizForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
 
     class Meta:
-        model = Teacher
-        fields = ('specialization',)
+        model = Quiz
+        fields = ('name', 'subject', 'max_score', 'required_score_to_pass', 'time')
 
 
 class StudentDeleteForm(forms.ModelForm):

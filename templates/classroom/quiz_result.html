@@ -2,32 +2,37 @@
 
 {% block page_content %}
     <h2 class="mb-3">{{ quiz.name }} Results</h2>
-
-    <div class="card">
-        <div class="card-header">
-            <strong>Taken Quizzes</strong>
-            <span class="badge badge-pill badge-primary float-right">Average Score: {{ quiz_score.average_score|default_if_none:0.0 }}</span>
-        </div>
-        <table class="table mb-0">
-            <thead>
-            <tr>
-                <th>Student</th>
-                <th>Date</th>
-                <th>Score</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for taken_quiz in taken_quizzes %}
+    <h4 class="mb-3">Max score: {{ quiz.max_score }}</h4>
+    {% if total_taken == 0 %}
+        <h4 class="mb-3"><strong><i>No quizzes taken by students</i></strong></h4>
+    {% else %}
+        <div class="card">
+            <div class="card-header">
+                <strong>Taken Quizzes</strong>
+                <span class="badge badge-pill badge-primary float-right">Average Score: {{ average_score }}</span>
+            </div>
+            <table class="table mb-0">
+                <thead>
                 <tr>
-                    <td>{{ taken_quiz.student.user.username }}</td>
-                    <td>{{ taken_quiz.date }}</td>
-                    <td>{{ taken_quiz.score }}</td>
+                    <th>Student</th>
+                    <th>Date</th>
+                    <th>Score</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <div class="card-footer text-muted">
-            Total respondents: <strong>{{ total_taken_quizzes }}</strong>
+                </thead>
+                <tbody>
+                {% for quiz in results %}
+                    <tr>
+                        <td>{{ quiz.student.username }}</td>
+                        <td>{{ quiz.date }}</td>
+                        <td>{{ quiz.score }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="card-footer text-muted">
+                Total respondents: <strong>{{ total_taken }}</strong>
+            </div>
         </div>
-    </div>
+    {% endif %}
+    <a href="{% url 'teacher quizzes' %}">Back to Quizzes</a>
 {% endblock %}

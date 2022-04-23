@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block page_content %}
+
+    {% include 'classroom/student_header.html' with active='new' %}
+
+    <div class="card">
+        <table class="table mb-0">
+            <thead>
+            <tr>
+                <th>Quiz</th>
+                <th>Subject</th>
+                <th>Score</th>
+                <th>Questions</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for quiz in quizzes %}
+                <tr>
+                    <td class="align-middle">{{ quiz.name }}</td>
+                    <td class="align-middle">{{ quiz.subject.get_html_badge }}</td>
+                    <td class="align-middle">{{ quiz.max_score }}</td>
+                    <td class="align-middle">{{ quiz.get_questions|length }}</td>
+                    <td class="text-right">
+                        <a href="{% url 'take quiz' quiz.pk %}" class="btn btn-primary">Start quiz</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td class="bg-light text-center font-italic" colspan="4">No quiz matching your interests right
+                        now.
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+{% endblock %}

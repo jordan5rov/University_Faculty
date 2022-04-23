@@ -3,7 +3,6 @@
 {% block page_content %}
     <h2 class="mb-3">
         {{ quiz.name }}
-        <a href="{% url 'result quiz' quiz.id %}" class="btn btn-primary float-right">View results</a>
     </h2>
     <div class="row mb-3">
         <div class="col-md-6 col-sm-8 col-12">
@@ -11,8 +10,8 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-success">Save changes</button>
-                <a href="{% url 'quizzes' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
-                <a href="{% url 'delete quiz' quiz.id %}" class="btn btn-danger float-right">Delete</a>
+                <a href="{% url 'teacher quizzes' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
+                <a href="{% url 'delete quiz' quiz.id %}" class="btn btn-danger">Delete</a>
             </form>
         </div>
     </div>
@@ -23,7 +22,7 @@
                     <strong>Questions</strong>
                 </div>
                 <div class="col-2">
-                    <strong>Answers</strong>
+                    <strong>Answer</strong>
                 </div>
             </div>
         </div>
@@ -35,19 +34,24 @@
                             <a href="{% url 'update question' quiz.pk question.pk %}">{{ question.question }}</a>
                         </div>
                         <div class="col-2">
-                            {{ question.answers_count }}
+                            {{ question.correct_option }}
                         </div>
                     </div>
                 </div>
             {% empty %}
                 <div class="list-group-item text-center">
                     <p class="text-muted font-italic mb-0">You haven't created any questions yet. Go ahead and <a
-                            href="">add the first question</a>.</p>
+                            href="{% url 'create question' quiz.pk %}">add the first question</a>.</p>
                 </div>
             {% endfor %}
         </div>
+
         <div class="card-footer">
-            <a href="{% url 'create question' quiz.pk %}" class="btn btn-primary btn-sm">Add question</a>
+            {% if questions %}
+                <a href="{% url 'create question' quiz.pk %}" class="btn btn-primary btn-sm">Add question</a>
+            {% endif %}
         </div>
     </div>
+    <h5><i>Click on Question's name to Edit it</i></h5>
+    <h5><i>Note that the student can see quizzes that have >= 5 questions</i></h5>
 {% endblock %}

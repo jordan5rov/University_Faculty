@@ -34,7 +34,6 @@ class Quiz(models.Model):
     time = models.IntegerField(help_text='Duration time in minutes')
     required_score_to_pass = models.IntegerField(default=0, help_text='Required score to pass the quiz')
     max_score = models.IntegerField(default=100, help_text='Maximum score for the quiz')
-    is_taken = models.BooleanField(default=False, help_text='Whether the quiz is taken or not')
 
     def get_questions(self):
         questions = list(self.questions.all())
@@ -65,12 +64,13 @@ class Question(models.Model):
     OPTIONS = [(x, x) for x in [OPTION_1, OPTION_2, OPTION_3, OPTION_4]]
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
     question = models.CharField(max_length=QUESTION_MAX_LENGTH)
+
     option_1 = models.CharField(max_length=OPTIONS_MAX_LENGTH)
     option_2 = models.CharField(max_length=OPTIONS_MAX_LENGTH)
     option_3 = models.CharField(max_length=OPTIONS_MAX_LENGTH)
     option_4 = models.CharField(max_length=OPTIONS_MAX_LENGTH)
 
-    correct_option = models.CharField(max_length=1, choices=OPTIONS)
+    correct_option = models.CharField(max_length=OPTIONS_MAX_LENGTH, choices=OPTIONS)
 
     def __str__(self):
         return self.question
