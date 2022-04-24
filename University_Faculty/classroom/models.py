@@ -1,6 +1,7 @@
 import random
 
 from django.contrib.auth import models as auth_models
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.html import escape, mark_safe
 from University_Faculty.common.constants import *
@@ -31,7 +32,12 @@ class Quiz(models.Model):
     owner = models.ForeignKey(UniversityUser, on_delete=models.CASCADE, related_name='quizzes')
     name = models.CharField(max_length=QUIZ_NAME_MAX_LENGTH, unique=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='quizzes')
-    time = models.IntegerField(help_text='Duration time in minutes')
+    time = models.IntegerField(
+        help_text='Duration time in minutes',
+        validators=(
+            MinValueValidator(TIME_MIN_VALUE),
+        )
+    )
     required_score_to_pass = models.IntegerField(default=0, help_text='Required score to pass the quiz')
     max_score = models.IntegerField(default=100, help_text='Maximum score for the quiz')
 
@@ -55,6 +61,13 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.OneToOneField(UniversityUser, on_delete=models.CASCADE, primary_key=True)
     specialization = models.ManyToManyField(Subject)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Admin(models.Model):
+    user = models.OneToOneField(UniversityUser, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
         return self.user.username

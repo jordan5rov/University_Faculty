@@ -1,9 +1,49 @@
 const url = window.location.href;
-
 const quizBox = document.getElementById('quiz-box');
-
 const scoreBoxText = document.querySelector('.score-box h4');
+const timerText = document.querySelector('#timer-heading');
 
+const activateTimer = (time) =>{
+    if (time.toString().length < 2) {
+        timerText.innerHTML = `<b>0${time}:00</b>`
+    } else {
+        timerText.innerHTML = `<b>${time}:00</b>`
+    }
+
+    let minutes = time - 1
+    let seconds = 60
+    let displaySeconds
+    let displayMinutes
+
+    const timer = setInterval(()=>{
+        seconds --
+        if (seconds < 0) {
+            seconds = 59
+            minutes --
+        }
+        if (minutes.toString().length < 2) {
+            displayMinutes = '0'+minutes
+        } else {
+            displayMinutes = minutes
+        }
+        if(seconds.toString().length < 2) {
+            displaySeconds = '0' + seconds
+        } else {
+            displaySeconds = seconds
+        }
+        if (minutes === 0 && seconds === 0) {
+            timerText.innerHTML = "<b>00:00</b>"
+            setTimeout(()=>{
+                clearInterval(timer)
+                alert('Time over')
+                sendData()
+            }, 500)
+        }
+
+        timerText.innerHTML = `<b>${displayMinutes}:${displaySeconds}</b>`
+    }, 1000)
+
+}
 
 $.ajax({
     type: 'GET',
@@ -32,6 +72,7 @@ $.ajax({
                 });
             }
         });
+        activateTimer(response.time);
     },
     error: function (error) {
         console.log(error);

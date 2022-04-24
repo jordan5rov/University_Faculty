@@ -21,12 +21,14 @@
             <li><a href="{% url 'home' %}">Home</a></li>
             {% if request.user.is_authenticated %}
                 {% if request.user.type == 'Teacher' %}
-                    <li><a href="{% url 'create news' %}">Add news</a></li>
-                    <li><a href="#">Add event</a></li>
                     <li><a href="{% url 'create quiz' %}">Add Quiz</a></li>
                     <li><a href="{% url 'teacher quizzes' %}">Quizzes</a></li>
-                {% else %}
+                {% elif request.user.type == 'Admin' %}
+                    <li><a href="{% url 'create news' %}">Add news</a></li>
+                    <li><a href="#">Add event</a></li>
+                {% elif request.user.type == 'Student' %}
                     <li><a href="{% url 'student quizzes' %}">Quizzes</a></li>
+                    <li><a href="">Events</a></li>
                 {% endif %}
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}

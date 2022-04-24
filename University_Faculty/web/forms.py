@@ -7,7 +7,6 @@ from University_Faculty.web.models import News
 class CreateNewsForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.user = user
         self._init_bootstrap_form_controls()
 
     def save(self, commit=True):
@@ -28,6 +27,27 @@ class CreateNewsForm(BootstrapFormMixin, forms.ModelForm):
                     'placeholder': 'Enter News title',
                 }
             ),
+            'description': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter News description'
+                }
+            )
+        }
+
+
+class EditNewsForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = News
+        fields = ('title', 'image', 'description')
+        widgets = {
+            'title': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter News title',
+                }),
             'description': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter News description'

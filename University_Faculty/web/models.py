@@ -1,5 +1,7 @@
 from django.db import models
 
+from University_Faculty.classroom.models import Admin, UniversityUser
+
 
 class News(models.Model):
     TITLE_MAX_LENGTH = 30
@@ -9,12 +11,14 @@ class News(models.Model):
     )
     image = models.FileField(
         upload_to=IMAGE_UPLOAD_TO_DIRECTORY,
+        null=True,
         blank=True
     )
     description = models.TextField()
     published_on = models.DateTimeField(
         auto_now=True
     )
+    author = models.ForeignKey(Admin, on_delete=models.CASCADE)
 
 
 class Event(models.Model):
@@ -25,6 +29,7 @@ class Event(models.Model):
     )
     image = models.FileField(
         upload_to=IMAGE_UPLOAD_TO_DIRECTORY,
+        null=True,
         blank=True
     )
     description = models.TextField()
@@ -32,3 +37,4 @@ class Event(models.Model):
     published_on = models.DateTimeField(
         auto_now=True
     )
+    participants = models.ManyToManyField(UniversityUser)

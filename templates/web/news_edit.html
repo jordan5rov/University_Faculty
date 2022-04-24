@@ -1,7 +1,10 @@
 {% extends 'base.html'%}
 {% block page_content%}
     <h1>Edit news</h1>
-    <form action="post">
-        {{ form }}
+    <form method="post" action="{% url 'edit news' news.pk %}">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning">Edit</button>
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary">Nevermind</a>
     </form>
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from University_Faculty.web.forms import CreateNewsForm, DeleteNewsForm
+from University_Faculty.web.forms import CreateNewsForm, DeleteNewsForm, EditNewsForm
 from University_Faculty.web.models import News
 
 
@@ -18,12 +18,19 @@ class NewsCreate(views.CreateView):
 
 class NewsDetailsView(views.DetailView):
     model = News
-    template_name = 'web/news_details.html'
+    template_name = 'web/news.html'
     context_object_name = 'news'
 
 
 class NewsEditView(views.UpdateView):
     template_name = 'web/news_edit.html'
+    model = News
+    form_class = EditNewsForm
+    success_url = reverse_lazy('see more news')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class NewsSeeMoreView(views.ListView):

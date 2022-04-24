@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block page_content %}
     <div class="title">
         <h1 class="heading">News <a href="{% url 'see more news' %}">See more</a>
@@ -12,10 +13,16 @@
             <div class="col-sm-12 col-md-5 col-lg col-xl card">
                 <div class="card-header">{{ current_news.title }}</div>
                 <div class="card-body">
-                    <img src="{{ current_news.image.url }}" alt="">
+                    {% if current_news.img %}
+                        <img src="{{ current_news.image.url }}" alt="{{ current_news.description }}">
+                    {% else %}
+                        <img src="{% static 'images/default_news.jfif' %}" alt="{{ current_news.description }}">
+                    {% endif %}
                 </div>
                 <div class="card-footer">
-                    <button class="button">Read</button>
+                    <button class="button"><a href="{% url 'read news' current_news.pk %}" style="color: white;">Read</a></button>
+                    <button class="button"><a href="{% url 'edit news' current_news.pk %}" style="color: white;">Edit</a></button>
+
                 </div>
             </div>
         {% endfor %}
