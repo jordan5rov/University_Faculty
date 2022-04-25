@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header">
                 <strong>Taken Quizzes</strong>
-                <span class="badge badge-pill badge-primary float-right">Average Score: {{ average_score }}</span>
+                <span class="badge badge-pill badge-primary float-right">Average Score: {{ average_score|floatformat:2 }}</span>
             </div>
             <table class="table mb-0">
                 <thead>

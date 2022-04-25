@@ -1,7 +1,9 @@
 {% extends 'base.html'%}
 {% block page_content%}
     <h1>Edit news</h1>
-    <form action="post">
-        {{ form }}
+    <form method="post" action="{% url 'edit event' event.pk %}">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning">Edit</button>
     </form>
 {% endblock %}

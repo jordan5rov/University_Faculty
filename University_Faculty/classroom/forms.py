@@ -1,7 +1,5 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
-from django.core.exceptions import ValidationError
-from django.db import transaction
 
 from University_Faculty.classroom.models import Subject, Student, Teacher, Question, Quiz
 from University_Faculty.common.helpers import BootstrapFormMixin
@@ -21,14 +19,14 @@ class StudentCreateForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     )
 
     def save(self, commit=True):
-        user = super().save(commit=False)
+        user = super().save(commit=commit)
         user.type = STUDENT
-
-        if commit:
-            user.save()
 
         student = Student.objects.create(user=user)
         student.interests.add(*self.cleaned_data.get('interests'))
+
+        if commit:
+            student.save()
 
         return user
 
@@ -41,13 +39,6 @@ class TeacherCreateForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
-        self.fields['specialization'].widget.attrs['class'] = 'checkbox-inline'
-
-    specialization = forms.ModelMultipleChoiceField(
-        queryset=Subject.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=True
-    )
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -63,16 +54,6 @@ class TeacherCreateForm(BootstrapFormMixin, auth_forms.UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = ('username', 'password1', 'password2')
-
-
-class StudentEditForm(BootstrapFormMixin, forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._init_bootstrap_form_controls()
-
-    class Meta:
-        model = Student
-        fields = ('interests',)
 
 
 class StudentInterestForm(forms.ModelForm):
@@ -126,5 +107,3 @@ class QuestionForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Question
         fields = ('question', 'option_1', 'option_2', 'option_3', 'option_4', 'correct_option')
-
-

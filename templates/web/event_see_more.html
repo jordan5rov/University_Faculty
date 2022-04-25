@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block page_content %}
-    {% for current_news in news %}
+    {% for event in events %}
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ current_news.title }}</h5>
-                <p class="card-text">Published on: {{ current_news.published_on|date:"M d, Y" }}</p>
-                <a href="{% url 'read news' current_news.pk %}" class="btn btn-primary">Read</a>
-                <a href="{% url 'edit news' current_news.pk %}" class="btn btn-warning">Edit</a>
-                <a href="{% url 'delete news' current_news.pk %}" class="btn btn-danger">Delete</a>
+                <h5 class="card-title">{{ event.title }}</h5>
+                <p class="card-text">Published on: {{ event.published_on|date:"M d, Y" }}</p>
+                <a href="{% url 'view event' event.pk %}" class="btn btn-primary">View</a>
+                <a href="{% url 'edit event' event.pk %}" class="btn btn-warning">Edit</a>
+                <a href="{% url 'delete event' event.pk %}" class="btn btn-danger">Delete</a>
             </div>
         </div>
     {% endfor %}

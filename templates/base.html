@@ -23,9 +23,8 @@
                 {% if request.user.type == 'Teacher' %}
                     <li><a href="{% url 'create quiz' %}">Add Quiz</a></li>
                     <li><a href="{% url 'teacher quizzes' %}">Quizzes</a></li>
-                {% elif request.user.type == 'Admin' %}
                     <li><a href="{% url 'create news' %}">Add news</a></li>
-                    <li><a href="#">Add event</a></li>
+                    <li><a href="{% url 'create event' %}">Add event</a></li>
                 {% elif request.user.type == 'Student' %}
                     <li><a href="{% url 'student quizzes' %}">Quizzes</a></li>
                     <li><a href="">Events</a></li>

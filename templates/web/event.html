@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block page_content %}
+    <div class="card">
+        <div class="card-header">
+            {{ event.title }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><i>published on {{ event.published_on|date:"M d, Y" }}</i></h5>
+            <h5 class="card-title"><i><strong>happening
+                on {{ event.date|date:"M d" }} {{ event.date|time }}</strong></i></h5>
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}">
+            {% endif %}
+            <p class="card-text">{{ event.description }}</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">Go back</a>
+        </div>
+    </div>
+{% endblock %}

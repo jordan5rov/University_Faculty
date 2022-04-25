@@ -1,6 +1,9 @@
+import datetime
+
+from django.core.exceptions import ValidationError
 from django.db import models
 
-from University_Faculty.classroom.models import Admin, UniversityUser
+from University_Faculty.classroom.models import UniversityUser, Teacher
 
 
 class News(models.Model):
@@ -18,7 +21,6 @@ class News(models.Model):
     published_on = models.DateTimeField(
         auto_now=True
     )
-    author = models.ForeignKey(Admin, on_delete=models.CASCADE)
 
 
 class Event(models.Model):
@@ -33,8 +35,12 @@ class Event(models.Model):
         blank=True
     )
     description = models.TextField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(default=datetime.datetime.now)
     published_on = models.DateTimeField(
         auto_now=True
     )
-    participants = models.ManyToManyField(UniversityUser)
+
+    def save(self, *args, **kwargs):
+        if self.date.date() < datetime.date.today():
+            raise ValidationError("The date cannot be in the past!")
+        super(Event, self).save(*args, **kwargs)

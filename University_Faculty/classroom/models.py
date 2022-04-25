@@ -52,6 +52,7 @@ class Quiz(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(UniversityUser, on_delete=models.CASCADE, primary_key=True)
+    picture = models.ImageField(upload_to='student_images', blank=True, null=True)
     interests = models.ManyToManyField(Subject)
 
     def __str__(self):
@@ -60,14 +61,7 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(UniversityUser, on_delete=models.CASCADE, primary_key=True)
-    specialization = models.ManyToManyField(Subject)
-
-    def __str__(self):
-        return self.user.username
-
-
-class Admin(models.Model):
-    user = models.OneToOneField(UniversityUser, on_delete=models.CASCADE, primary_key=True)
+    picture = models.ImageField(upload_to='teacher_images', blank=True, null=True)
 
     def __str__(self):
         return self.user.username
