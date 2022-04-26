@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 
 from University_Faculty.common.helpers import BootstrapFormMixin
@@ -39,6 +41,12 @@ class CreateEventForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+
+    def clean_date(self):
+        date = self.cleaned_data['date']
+        if date < datetime.datetime.today():
+            raise forms.ValidationError('Date must be in the future')
+        return date
 
     def save(self, commit=True):
         event = super().save(commit=False)
@@ -102,6 +110,12 @@ class EditEventForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._init_bootstrap_form_controls()
+
+    def clean_date(self):
+        date = self.cleaned_data['date']
+        if date < datetime.datetime.today():
+            raise forms.ValidationError('Date must be in the future')
+        return date
 
     class Meta:
         model = Event

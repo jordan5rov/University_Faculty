@@ -1,6 +1,6 @@
 from django.urls import path
 
-from University_Faculty.web.views.events import EventDetailsView, EventEditView, EventDeleteView, EventCreate, \
+from University_Faculty.web.views.events import EventDetailsView, EventEditView, EventDeleteView, EventCreateView, \
     EventSeeMoreView
 from University_Faculty.web.views.generic import HomeView
 from University_Faculty.web.views.news import NewsCreate, NewsDetailsView, NewsEditView, NewsDeleteView, NewsSeeMoreView
@@ -13,7 +13,7 @@ urlpatterns = (
     path('news/<int:pk>/', NewsDetailsView.as_view(), name='read news'),
     path('news/see-more/', NewsSeeMoreView.as_view(), name='see more news'),
 
-    path('event/create/', EventCreate.as_view(), name='create event'),
+    path('event/create/', EventCreateView.as_view(), name='create event'),
     path('event/<int:pk>/', EventDetailsView.as_view(), name='view event'),
     path('event/edit/<int:pk>/', EventEditView.as_view(), name='edit event'),
     path('event/delete/<int:pk>/', EventDeleteView.as_view(), name='delete event'),

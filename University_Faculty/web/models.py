@@ -1,6 +1,7 @@
 import datetime
 
 from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db import models
 
 from University_Faculty.classroom.models import UniversityUser, Teacher
@@ -17,7 +18,12 @@ class News(models.Model):
         null=True,
         blank=True
     )
-    description = models.TextField()
+    description = models.TextField(
+        validators=(
+            MinLengthValidator(30),
+            MaxLengthValidator(500),
+        )
+    )
     published_on = models.DateTimeField(
         auto_now=True
     )
@@ -34,13 +40,13 @@ class Event(models.Model):
         null=True,
         blank=True
     )
-    description = models.TextField()
-    date = models.DateTimeField(default=datetime.datetime.now)
+    description = models.TextField(
+        validators=(
+            MinLengthValidator(30),
+            MaxLengthValidator(500),
+        )
+    )
+    date = models.DateTimeField()
     published_on = models.DateTimeField(
         auto_now=True
     )
-
-    def save(self, *args, **kwargs):
-        if self.date.date() < datetime.date.today():
-            raise ValidationError("The date cannot be in the past!")
-        super(Event, self).save(*args, **kwargs)

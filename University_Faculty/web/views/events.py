@@ -5,7 +5,7 @@ from University_Faculty.web.forms import CreateEventForm, EditEventForm, DeleteE
 from University_Faculty.web.models import Event
 
 
-class EventCreate(views.CreateView):
+class EventCreateView(views.CreateView):
     model = Event
     form_class = CreateEventForm
     template_name = 'web/event_create.html'

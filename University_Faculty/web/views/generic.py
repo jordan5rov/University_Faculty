@@ -13,6 +13,6 @@ class HomeView(views.ListView):
         context = super().get_context_data(**kwargs)
         context['news'] = News.objects.all().order_by('-published_on')[:3]
 
-        context['events'] = Event.objects.all().order_by('-date')[0:3]
+        context['events'] = Event.objects.all().order_by('date')[0:3]
 
         return context

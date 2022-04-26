@@ -1,3 +1,5 @@
+import datetime
+
 STUDENT = 'Student'
 TEACHER = 'Teacher'
 ADMIN = 'Admin'
@@ -26,3 +28,9 @@ OPTIONS_MAPPER = {
 TEXT_MAX_LENGTH = 30
 
 TIME_MIN_VALUE = 1
+
+VALID_EVENT_DATA = {
+        'title': 'Test Event',
+        'description': 'Test Event Description' * 10,
+        'date': datetime.datetime(3022, 1, 1, 0, 0),
+    }
