@@ -5,8 +5,8 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic as views
 
-from University_Faculty.classroom.forms import TeacherEditQuizForm
-from University_Faculty.classroom.models import Quiz, Result
+from University_Faculty.classroom.forms import TeacherEditQuizForm, SubjectForm
+from University_Faculty.classroom.models import Quiz, Result, Subject
 from University_Faculty.classroom.views.authentication import RegisterView
 from University_Faculty.common.decorators import teacher_required
 
@@ -85,3 +85,15 @@ class QuizResultsView(views.DetailView):
 
     def get_queryset(self):
         return self.request.user.quizzes.all()
+
+
+class CreateSubjectView(views.CreateView):
+    model = Subject
+    template_name = 'classroom/subject_create.html'
+    form_class = SubjectForm
+
+    def form_valid(self, form):
+        quiz = form.save(commit=False)
+        quiz.owner = self.request.user
+        quiz.save()
+        return redirect('teacher quizzes')

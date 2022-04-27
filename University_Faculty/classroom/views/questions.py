@@ -11,10 +11,6 @@ from University_Faculty.classroom.models import Quiz, Question
 
 
 def create_question_view(request, pk):
-    # By filtering the quiz by the url keyword argument `pk` and
-    # by the owner, which is the logged in user, we are protecting
-    # this view at the object-level. Meaning only the owner of
-    # quiz will be able to add questions to it.
     quiz = get_object_or_404(Quiz, pk=pk, owner=request.user)
 
     if request.method == 'POST':
@@ -31,12 +27,6 @@ def create_question_view(request, pk):
 
 
 def edit_question_view(request, quiz_pk, question_pk):
-    # Simlar to the `question_add` view, this view is also managing
-    # the permissions at object-level. By querying both `quiz` and
-    # `question` we are making sure only the owner of the quiz can
-    # change its details and also only questions that belongs to this
-    # specific quiz can be changed via this url (in cases where the
-    # user might have forged/player with the url params.
     quiz = get_object_or_404(Quiz, pk=quiz_pk, owner=request.user)
     question = get_object_or_404(Question, pk=question_pk, quiz=quiz)
 

@@ -75,28 +75,14 @@ class TeacherEditQuizForm(BootstrapFormMixin, forms.ModelForm):
         fields = ('name', 'subject', 'max_score', 'required_score_to_pass', 'time')
 
 
-class StudentDeleteForm(forms.ModelForm):
-    def save(self, commit=True):
-        interests = self.instance.subjects_set.all()
-        interests.delete()
-        self.instance.delete()
-        return self.instance
+class SubjectForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
 
     class Meta:
-        model = Student
-        fields = ()
-
-
-class TeacherDeleteForm(forms.ModelForm):
-    def save(self, commit=True):
-        specializations = self.instance.subjects_set.all()
-        specializations.delete()
-        self.instance.delete()
-        return self.instance
-
-    class Meta:
-        model = Teacher
-        fields = ()
+        model = Subject
+        fields = ('name','color')
 
 
 class QuestionForm(BootstrapFormMixin, forms.ModelForm):

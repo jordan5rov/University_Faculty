@@ -4,6 +4,8 @@
     <form method="post" action="{% url 'delete news' news.pk %}" enctype="multipart/form-data" class="cite-form">
         {{ form }}
         {% csrf_token %}
-        <button class="btn btn-danger" type="submit">Delete</button>
+        <button type="submit" class="btn btn-danger btn-lg">Yes, I'm sure</button>
+        <a href="{% url 'see more news' %}" class="btn btn-outline-secondary btn-lg"
+           role="button">Nevermind</a>
     </form>
 {% endblock %}

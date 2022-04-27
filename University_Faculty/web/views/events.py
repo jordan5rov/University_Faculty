@@ -43,5 +43,5 @@ class EventEditView(views.UpdateView):
 class EventDeleteView(views.DeleteView):
     model = Event
     template_name = 'web/event_delete.html'
-    success_url = reverse_lazy('see more news')
+    success_url = reverse_lazy('see more event')
     form_class = DeleteEventForm

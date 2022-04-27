@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 {% block page_content %}
-    <h2 class="mb-3">Add a new quiz</h2>
-    <p>Each quiz has maximum points and required point to pass, but each question has the same weight</p>
-    <p>Example: 100 max points with 5 questions (100 / 5 = 20 points per question)</p>
+    <h2 class="mb-3">Add a new Subject</h2>
     <div class="row">
         <div class="col-md-6 col-sm-8 col-12">
-            <form method="post">
+            <form method="post" action="{% url 'create subject' %}">
                 {% csrf_token %}
                 {{ form }}
                 <button type="submit" class="btn btn-success">Save</button>
