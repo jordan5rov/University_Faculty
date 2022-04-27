@@ -5,7 +5,6 @@
         {{ form }}
         {% csrf_token %}
         <button type="submit" class="btn btn-danger btn-lg">Yes, I'm sure</button>
-        <a href="{% url 'see more news' %}" class="btn btn-outline-secondary btn-lg"
-           role="button">Nevermind</a>
+        <a href="{% url 'see more news' %}" class="btn btn-outline-secondary btn-lg" role="button">Nevermind</a>
     </form>
 {% endblock %}
