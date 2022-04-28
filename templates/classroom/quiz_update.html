@@ -10,7 +10,6 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-success">Save changes</button>
-                <a href="{% url 'teacher quizzes' %}" class="btn btn-outline-secondary" role="button">Nevermind</a>
                 <a href="{% url 'delete quiz' quiz.id %}" class="btn btn-danger">Delete</a>
             </form>
         </div>

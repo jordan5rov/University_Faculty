@@ -1,10 +1,14 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import generic as views
 
+from University_Faculty.common.decorators import teacher_required
 from University_Faculty.web.forms import CreateNewsForm, DeleteNewsForm, EditNewsForm
 from University_Faculty.web.models import News
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class NewsCreate(views.CreateView):
     model = News
     template_name = 'web/news_create.html'
@@ -22,6 +26,7 @@ class NewsDetailsView(views.DetailView):
     context_object_name = 'news'
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class NewsEditView(views.UpdateView):
     template_name = 'web/news_edit.html'
     model = News
@@ -40,6 +45,7 @@ class NewsSeeMoreView(views.ListView):
     context_object_name = 'news'
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class NewsDeleteView(views.DeleteView):
     model = News
     template_name = 'web/news_delete.html'

@@ -6,8 +6,10 @@
                 <h5 class="card-title">{{ event.title }}</h5>
                 <p class="card-text">Published on: {{ event.published_on|date:"M d, Y" }}</p>
                 <a href="{% url 'view event' event.pk %}" class="btn btn-primary">View</a>
-                <a href="{% url 'edit event' event.pk %}" class="btn btn-warning">Edit</a>
-                <a href="{% url 'delete event' event.pk %}" class="btn btn-danger">Delete</a>
+                {% if request.user.type == 'Teacher'%}
+                    <a href="{% url 'edit event' event.pk %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'delete event' event.pk %}" class="btn btn-danger">Delete</a>
+                {% endif %}
             </div>
         </div>
     {% endfor %}

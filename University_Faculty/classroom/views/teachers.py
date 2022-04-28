@@ -25,6 +25,7 @@ class QuizListView(views.ListView):
         return queryset
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class QuizCreateView(views.CreateView):
     model = Quiz
     fields = ('name', 'subject', 'time', 'required_score_to_pass', 'max_score')
@@ -37,6 +38,7 @@ class QuizCreateView(views.CreateView):
         return redirect('teacher quizzes')
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class QuizUpdateView(views.UpdateView):
     model = Quiz
     form_class = TeacherEditQuizForm
@@ -54,6 +56,7 @@ class QuizUpdateView(views.UpdateView):
         return reverse_lazy('teacher quizzes')
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class QuizDeleteView(views.DeleteView):
     model = Quiz
     context_object_name = 'quiz'
@@ -64,6 +67,7 @@ class QuizDeleteView(views.DeleteView):
         return self.request.user.quizzes.all()
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class QuizResultsView(views.DetailView):
     model = Result
     context_object_name = 'quiz'
@@ -87,6 +91,7 @@ class QuizResultsView(views.DetailView):
         return self.request.user.quizzes.all()
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class CreateSubjectView(views.CreateView):
     model = Subject
     template_name = 'classroom/subject_create.html'

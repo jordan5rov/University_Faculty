@@ -35,6 +35,7 @@ class QuizListView(views.ListView):
         return queryset
 
 
+@method_decorator([login_required, student_required], name='dispatch')
 class StudentInterestView(views.UpdateView):
     model = Student
     template_name = 'classroom/interest_form.html'
@@ -45,6 +46,8 @@ class StudentInterestView(views.UpdateView):
         return self.request.user.student
 
 
+@login_required
+@student_required
 def take_quiz_view(request, pk):
     quiz = Quiz.objects.get(pk=pk)
 
@@ -54,6 +57,8 @@ def take_quiz_view(request, pk):
     return render(request, 'classroom/quiz.html', context)
 
 
+@login_required
+@student_required
 def quiz_data_view(request, pk):
     quiz = Quiz.objects.get(pk=pk)
     questions = []
@@ -73,6 +78,8 @@ def quiz_data_view(request, pk):
     return JsonResponse(context)
 
 
+@login_required
+@student_required
 def quiz_save_view(request, pk):
     if is_ajax(request):
         questions = []
@@ -135,6 +142,7 @@ def quiz_save_view(request, pk):
         return JsonResponse(context)
 
 
+@method_decorator([login_required, student_required], name='dispatch')
 class QuizTakenListView(views.ListView):
     model = Result
     template_name = 'classroom/student_quiz_taken.html'

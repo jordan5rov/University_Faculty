@@ -1,7 +1,6 @@
 from django.urls import path
 
 from .views import authentication, questions, students, teachers
-from .views.teachers import CreateSubjectView
 
 urlpatterns = (
     path('register', authentication.RegisterView.as_view(), name='register'),
@@ -22,7 +21,7 @@ urlpatterns = (
     path('quiz/<int:pk>/update/', teachers.QuizUpdateView.as_view(), name='update quiz'),
     path('quiz/<int:pk>/delete/', teachers.QuizDeleteView.as_view(), name='delete quiz'),
     path('quiz/<int:pk>/result/', teachers.QuizResultsView.as_view(), name='result quiz'),
-    path('subject/create/', CreateSubjectView.as_view(), name='create subject'),
+    path('subject/create/', teachers.CreateSubjectView.as_view(), name='create subject'),
 
     path('quiz/<int:pk>/question/create/', questions.create_question_view, name='create question'),
     path('quiz/<int:quiz_pk>/question/<int:question_pk>/update/', questions.edit_question_view, name='update question'),

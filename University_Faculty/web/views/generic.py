@@ -1,5 +1,4 @@
-
-
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as views
 from University_Faculty.web.models import News, Event
@@ -16,3 +15,7 @@ class HomeView(views.ListView):
         context['events'] = Event.objects.all().order_by('date')[0:3]
 
         return context
+
+
+def handler404(request, exception):
+    return render(request, 'web/404_handler.html')

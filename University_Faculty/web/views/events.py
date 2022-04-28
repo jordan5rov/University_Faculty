@@ -1,10 +1,14 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import generic as views
 
+from University_Faculty.common.decorators import teacher_required
 from University_Faculty.web.forms import CreateEventForm, EditEventForm, DeleteEventForm
 from University_Faculty.web.models import Event
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class EventCreateView(views.CreateView):
     model = Event
     form_class = CreateEventForm
@@ -29,6 +33,7 @@ class EventDetailsView(views.DetailView):
     context_object_name = 'event'
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class EventEditView(views.UpdateView):
     template_name = 'web/event_edit.html'
     model = Event
@@ -40,6 +45,7 @@ class EventEditView(views.UpdateView):
         return super().form_valid(form)
 
 
+@method_decorator([login_required, teacher_required], name='dispatch')
 class EventDeleteView(views.DeleteView):
     model = Event
     template_name = 'web/event_delete.html'
