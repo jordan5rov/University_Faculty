@@ -26,6 +26,9 @@ class EventSeeMoreView(views.ListView):
     paginate_by = 10
     context_object_name = 'events'
 
+    def get_queryset(self):
+        return Event.objects.all().order_by('-date')
+
 
 class EventDetailsView(views.DetailView):
     model = Event

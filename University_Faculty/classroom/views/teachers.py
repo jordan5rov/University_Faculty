@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import generic as views
 
-from University_Faculty.classroom.forms import TeacherEditQuizForm, SubjectForm
+from University_Faculty.classroom.forms import TeacherEditQuizForm, SubjectForm, QuizForm
 from University_Faculty.classroom.models import Quiz, Result, Subject
 from University_Faculty.classroom.views.authentication import RegisterView
 from University_Faculty.common.decorators import teacher_required
@@ -28,7 +28,7 @@ class QuizListView(views.ListView):
 @method_decorator([login_required, teacher_required], name='dispatch')
 class QuizCreateView(views.CreateView):
     model = Quiz
-    fields = ('name', 'subject', 'time', 'required_score_to_pass', 'max_score')
+    form_class = QuizForm
     template_name = 'classroom/quiz_create.html'
 
     def form_valid(self, form):

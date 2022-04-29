@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}
+    Create News
+{% endblock %}
 {% block page_content %}
     <form method="post" action="{% url 'create news' %}" enctype="multipart/form-data" class="cite-form">
         {% csrf_token %}

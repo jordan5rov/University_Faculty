@@ -29,8 +29,18 @@ TEXT_MAX_LENGTH = 30
 
 TIME_MIN_VALUE = 1
 
+TITLE_MAX_LENGTH = 255
+IMAGE_UPLOAD_TO_DIRECTORY = 'news/'
+
+EVENT_IMAGE_UPLOAD_TO_DIRECTORY = 'events/'
+
 VALID_EVENT_DATA = {
-        'title': 'Test Event',
-        'description': 'Test Event Description' * 10,
-        'date': datetime.datetime(3022, 1, 1, 0, 0),
-    }
+    'title': 'Test Event',
+    'description': 'Test Event Description' * 10,
+    'date': datetime.datetime(3022, 1, 1, 0, 0),
+}
+
+VALID_NEWS_DATA = {
+    'title': 'Test News',
+    'description': 'Test News Description' * 10,
+}

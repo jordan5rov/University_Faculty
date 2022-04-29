@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% block title %}
+    Quiz List
+{% endblock %}
 {% block page_content %}
 
     {% include 'classroom/student_header.html' with active='new' %}
@@ -10,7 +12,7 @@
             <tr>
                 <th>Quiz</th>
                 <th>Subject</th>
-                <th>Score</th>
+                <th>Max Score</th>
                 <th>Questions</th>
                 <th></th>
             </tr>
@@ -30,7 +32,7 @@
                 </tr>
             {% empty %}
                 <tr>
-                    <td class="bg-light text-center font-italic" colspan="4">No quiz matching your interests right
+                    <td class="bg-light text-center font-italic" colspan="5">No quiz matching your interests right
                         now.
                     </td>
                 </tr>

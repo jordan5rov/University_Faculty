@@ -1,48 +1,48 @@
 const url = window.location.href;
 const quizBox = document.getElementById('quiz-box');
 const scoreBoxText = document.querySelector('.score-box h4');
-const timerText = document.querySelector('#timer-heading');
+const timerBox = document.querySelector('#timer-heading');
+let timer;
 
-const activateTimer = (time) =>{
+function startTimer(time) {
+
     if (time.toString().length < 2) {
-        timerText.innerHTML = `<b>0${time}:00</b>`
+        timerBox.innerHTML = `<b>0${time}:00</b>`
     } else {
-        timerText.innerHTML = `<b>${time}:00</b>`
+        timerBox.innerHTML = `<b>${time}:00</b>`
     }
 
-    let minutes = time - 1
-    let seconds = 60
-    let displaySeconds
-    let displayMinutes
+    let minutes = time;
+    let seconds = 0;
+    let displaySeconds, displayMinutes;
 
-    const timer = setInterval(()=>{
-        seconds --
-        if (seconds < 0) {
-            seconds = 59
-            minutes --
+    const interval = setInterval(() => {
+        if (seconds === 0) {
+            minutes--;
+            seconds = 59;
         }
+        seconds--;
         if (minutes.toString().length < 2) {
-            displayMinutes = '0'+minutes
+            displayMinutes = '0' + minutes
         } else {
             displayMinutes = minutes
         }
-        if(seconds.toString().length < 2) {
+        if (seconds.toString().length < 2) {
             displaySeconds = '0' + seconds
         } else {
             displaySeconds = seconds
         }
-        if (minutes === 0 && seconds === 0) {
-            timerText.innerHTML = "<b>00:00</b>"
-            setTimeout(()=>{
-                clearInterval(timer)
-                alert('Time over')
-                sendData()
-            }, 500)
+        if (minutes < 0) {
+            clearInterval(interval);
+            alert('Time over')
+            sendData();
+            return;
         }
 
-        timerText.innerHTML = `<b>${displayMinutes}:${displaySeconds}</b>`
-    }, 1000)
+        timerBox.innerHTML = `<b>${displayMinutes}:${displaySeconds}</b>`;
+    }, 1000);
 
+    return interval;
 }
 
 $.ajax({
@@ -72,12 +72,13 @@ $.ajax({
                 });
             }
         });
-        activateTimer(response.time);
+        timer = startTimer(response.time);
     },
     error: function (error) {
         console.log(error);
     },
 });
+
 const quizForm = document.getElementById('quiz-form');
 const csrfToken = document.getElementsByName('csrfmiddlewaretoken');
 
@@ -103,10 +104,9 @@ const sendData = () => {
             const results = response.results;
             const score = response.score;
             const max_score = response.max_score;
-            if (response.passed === true){
+            if (response.passed === true) {
                 scoreBoxText.innerHTML += `<h4>You passed the quiz!</h4>`;
-            }
-            else {
+            } else {
                 scoreBoxText.innerHTML += `<h4>You failed the quiz!</h4>`;
             }
             quizForm.classList.add('d-none');
@@ -148,6 +148,6 @@ quizForm.addEventListener('submit', e => {
     if (!confirmation) {
         return;
     }
-
+    clearInterval(timer);
     sendData();
 });

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% load crispy_forms_tags crispy_forms_filters %}
+{% block title %}
+    Edit question
+{% endblock %}
 
 {% block page_content %}
     <h2 class="mb-3">{{ question.question }}</h2>
@@ -9,7 +11,7 @@
     <form method="post" action="{% url 'update question' quiz.pk question.pk %}">
         {% csrf_token %}
 
-        {{ form|crispy }}
+        {{ form }}
         <div class="buttons" style="margin-top: 2rem">
             <button type="submit" class="btn btn-success">Save changes</button>
             <a href="{% url 'update quiz' quiz.pk %}" class="btn btn-outline-secondary" role="button">Nevermind</a>

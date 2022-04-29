@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-*kt@e=$_60sz+1gn0#2q)@3!e0iz0gcupk+$&v+fa)!s5v!#6v'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -23,7 +23,6 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 )
 THIRD_PARTY_APPS = (
-    'crispy_forms',
 )
 
 UNIVERSITY_FACULTY_APPS = (

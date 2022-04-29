@@ -75,6 +75,16 @@ class TeacherEditQuizForm(BootstrapFormMixin, forms.ModelForm):
         fields = ('name', 'subject', 'max_score', 'required_score_to_pass', 'time')
 
 
+class QuizForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Quiz
+        fields = ('name', 'subject', 'max_score', 'required_score_to_pass', 'time')
+
+
 class SubjectForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -82,7 +92,7 @@ class SubjectForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Subject
-        fields = ('name','color')
+        fields = ('name', 'color')
 
 
 class QuestionForm(BootstrapFormMixin, forms.ModelForm):

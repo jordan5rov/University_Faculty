@@ -17,7 +17,6 @@
     </a>
     <div class="navbar-links">
         <ul>
-            <li>{{ request.user.type }}</li>
             <li><a href="{% url 'home' %}">Home</a></li>
             {% if request.user.is_authenticated %}
                 {% if request.user.type == 'Teacher' %}

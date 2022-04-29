@@ -44,6 +44,9 @@ class NewsSeeMoreView(views.ListView):
     paginate_by = 10
     context_object_name = 'news'
 
+    def get_queryset(self):
+        return News.objects.all().order_by('-published_on')
+
 
 @method_decorator([login_required, teacher_required], name='dispatch')
 class NewsDeleteView(views.DeleteView):
